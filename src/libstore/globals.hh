@@ -334,6 +334,15 @@ public:
     Setting<bool> allowNewPrivileges{this, false, "allow-new-privileges",
         "Whether builders can acquire new privileges by calling programs with "
         "setuid/setgid bits or with file capabilities."};
+
+    Setting<Strings> ignoredAcls{
+        this, {"security.selinux"}, "ignored-acls",
+        R"(
+          A list of ACLs that should be ignored, normally Nix attempts to
+          remove all ACLs from files and directories in the Nix store, but
+          some ACLs like `security.selinux` or `system.nfs4_acl` can't be
+          removed even by root. Therefore it's best to just ignore them.
+        )"};
 #endif
 
     Setting<Strings> hashedMirrors{this, {"http://tarballs.nixos.org/"}, "hashed-mirrors",
